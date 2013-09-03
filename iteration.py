@@ -30,3 +30,23 @@ s = ""
 for elm in ["a","b","c"]:
     s = s + elm
 # s is abc
+
+# iterable
+class OnlyEvens(object):
+    def __init__(self,s):
+        self.sequence = s
+        self.index = 0
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if self.index >= len(self.sequence):
+            raise StopIteration
+        v = self.sequence[self.index]
+        self.index += 2
+        return v
+
+oe = OnlyEvens(range(1,10))
+for even in oe:
+    print(even)
