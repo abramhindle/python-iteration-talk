@@ -53,5 +53,23 @@ for even in oe:
 
 # add 1 to a list
 v = [1,2,3]
-u = map((lambda x: x+1), [1,2,3])
+u = map((lambda x: x+1), v)
 # u is now [2,3,4], v is still [1,2,3]
+
+def basename(path):
+    return path.split("/")[-1]
+
+v = ["/home","/","/usr/local"]
+u = map(basename, v)
+#['home', '', 'local']
+
+# this is why you want blocks with 
+# few dependencies!
+import multiprocessing as multi
+def square(x):
+    return x * x
+
+p = multi.Pool( processes=8 )
+u = p.map(square, range(1,1000000))
+len(u)
+#999999
