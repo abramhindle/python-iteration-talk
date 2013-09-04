@@ -73,3 +73,22 @@ p = multi.Pool( processes=8 )
 u = p.map(square, range(1,1000000))
 len(u)
 #999999
+
+import operator
+l = range(1,1000000)
+p = multi.Pool( processes=2 )
+u = reduce(operator.add, p.map(square, l))
+v = sum(p.map(square, l))
+
+# parallel map
+def parallel_square(l):
+    p = multi.Pool( processes=2 )
+    return p.map(square, l)
+
+# parallel reduce
+def parallel_sum(l):
+    p = multi.Pool( processes=2 )
+    return sum(p.map(sum, [ l[0:len(l)/2], l[len(l)/2:len(l)] ]))
+
+parallel_sum( parallel_square(l))
+
