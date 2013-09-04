@@ -50,3 +50,8 @@ class OnlyEvens(object):
 oe = OnlyEvens(range(1,10))
 for even in oe:
     print(even)
+
+# add 1 to a list
+v = [1,2,3]
+u = map((lambda x: x+1), [1,2,3])
+# u is now [2,3,4], v is still [1,2,3]
