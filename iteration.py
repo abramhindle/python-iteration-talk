@@ -92,3 +92,12 @@ def parallel_sum(l):
 
 parallel_sum( parallel_square(l))
 
+
+def recsum(l,i=0):
+    if (i < len(l)):
+        return l[i] + recsum(l,i+1)
+    else:
+        return 0
+
+recsum(range(1,10))
+
