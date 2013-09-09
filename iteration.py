@@ -6,6 +6,11 @@ while condition:
     condition = not condition
 # condition is False
 
+#how many lines ?
+count = 0
+while sys.stdin.readline() != '':
+    count += 1
+
 x = 10
 while x > 0:
     x = x - 1
@@ -63,6 +68,14 @@ v = ["/home","/","/usr/local"]
 u = map(basename, v)
 #['home', '', 'local']
 
+import urllib2
+urls = ["http://cbc.ca","http://gc.ca","http://alberta.ca"]
+def get_url(url):
+    return urllib2.urlopen(url).read()
+
+pages = map(get_url, urls)
+
+
 # this is why you want blocks with 
 # few dependencies!
 import multiprocessing as multi
@@ -101,3 +114,6 @@ def recsum(l,i=0):
 
 recsum(range(1,10))
 
+
+p = multi.Pool( processes=2 )
+pages = p.map(get_url, urls)
