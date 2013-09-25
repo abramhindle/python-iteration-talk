@@ -1,72 +1,83 @@
 # while loop
 
-condition = True
-while condition:
-    """block"""
-    condition = not condition
+my $condition = 1;
+while ($condition) {
+    # ...
+    $condition = !$condition;
+}
 # condition is False
 
 #how many lines ?
-count = 0
-while sys.stdin.readline() != '':
-    count += 1
+my $count = 0;
+$count++ while(<STDIN>);
 
-x = 10
-while x > 0:
-    x = x - 1
+my $x = 10;
+while ($x > 0) {
+    $x--;
+}
 # x is 0
 
 # maybe you're not sure how many
 # iterations you need?
-x = 100.0
-while x > 1:
-    x = x / 3
+my $x = 100.0;
+while ($x > 1) {
+    $x /= 3;
+}
 
 # for loop
-sum = 0
-for i in range(1,10):
-    sum = sum + i
+my $sum = 0;
+for my $i (1..9) {
+    $sum += $i;
+}
 # sum is 45
-sum = 0
-for i in xrange(1,100000):
-    sum = sum + i
+
+# for loop
+my $sum = 0;
+for ( my $i = 1 ; $i < 100000; $i++ ) {
+    $sum += $i;
+}
 # sum is 4 999 950 000
-s = ""
-for elm in ["a","b","c"]:
-    s = s + elm
+
+my $s = "";
+for my $elm ("a","b","c") {
+    $s .= $elm;
+}
 # s is abc
 
-# iterable
-class OnlyEvens(object):
-    def __init__(self,s):
-        self.sequence = s
-        self.index = 0
+# The OO way
+package OnlyEvens;
+use Moose;
+has seq => (is=>'rw', default=>sub{[]});
+has index => (is => 'rw', default => 0);
 
-    def __iter__(self):
-        return self
+sub has_next {
+    my ($self) = @_;
+    return $self->index < scalar(@{$self->seq});
+}
+sub next {
+    my ($self) = @_;
+    my $v = $self->seq->[$self->index];
+    $self->index($self->index + 2);
+    return $v;
+}
+1;
 
-    def next(self):
-        if self.index >= len(self.sequence):
-            raise StopIteration
-        v = self.sequence[self.index]
-        self.index += 2
-        return v
-
-oe = OnlyEvens(range(1,10))
-for even in oe:
-    print(even)
+my $iter = OnlyEvens->new( seq => [1..10] );
+while ($iter->has_next()) {
+    print $iter->next().$/;
+}
 
 # add 1 to a list
-v = [1,2,3]
-u = map((lambda x: x+1), v)
-# u is now [2,3,4], v is still [1,2,3]
+my @v = (1..30);
+my @u = map { $_ + 1 }  @v;
+# u is now [2,3,4,..,31], v is still [1,2,3]
 
-def basename(path):
-    return path.split("/")[-1]
+use File::Basename;
 
-v = ["/home","/","/usr/local"]
-u = map(basename, v)
-#['home', '', 'local']
+my @v = ("/home","/file","/usr/local");
+my @u = map { basename $_ } @v;
+my @u = map(uc,@v);
+#['/HOME', '/FILE', '/USR/LOCAL']
 
 import urllib2
 urls = ["http://cbc.ca","http://gc.ca","http://alberta.ca"]
