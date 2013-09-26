@@ -44,6 +44,18 @@ for my $elm ("a","b","c") {
 }
 # s is abc
 
+# recursive way
+sub recsum {
+    if (@_) {
+        my $v = shift @_;
+        return $v + recsum(@_);
+    }
+    return 0;
+}
+
+print recsum(1..10);
+
+
 # The OO way
 package OnlyEvens;
 use Moose;
@@ -79,52 +91,39 @@ my @u = map { basename $_ } @v;
 my @u = map(uc,@v);
 #['/HOME', '/FILE', '/USR/LOCAL']
 
-import urllib2
-urls = ["http://cbc.ca","http://gc.ca","http://alberta.ca"]
-def get_url(url):
-    return urllib2.urlopen(url).read()
+use LWP::Simple;
 
-pages = map(get_url, urls)
+my @urls = ("http://cbc.ca","http://gc.ca","http://alberta.ca");
+my @pages = map { get $_ } @urls;
 
-
-# this is why you want blocks with 
+# this is why you want blocks with
 # few dependencies!
-import multiprocessing as multi
-def square(x):
-    return x * x
-
-p = multi.Pool( processes=8 )
-u = p.map(square, range(1,1000000))
-len(u)
+# slower
+use Parallel::parallel_map;
+sub square { $_[0] * $_[0] }
+my @u = parallel_map {square($_)}  1..1000000;
+print scalar(@u);
 #999999
 
-import operator
-l = range(1,1000000)
-p = multi.Pool( processes=2 )
-u = reduce(operator.add, p.map(square, l))
-v = sum(p.map(square, l))
-
-# parallel map
-def parallel_square(l):
-    p = multi.Pool( processes=2 )
-    return p.map(square, l)
-
-# parallel reduce
-def parallel_sum(l):
-    p = multi.Pool( processes=2 )
-    return sum(p.map(sum, [ l[0:len(l)/2], l[len(l)/2:len(l)] ]))
-
-parallel_sum( parallel_square(l))
-
-
-def recsum(l,i=0):
-    if (i < len(l)):
-        return l[i] + recsum(l,i+1)
-    else:
-        return 0
-
-recsum(range(1,10))
+use List::Util qw(reduce sum);
+use List::MoreUtils qw(part);
+use POSIX;
+sub split_list {
+    my ($n, @args) = @_;
+    my $i = 0;
+    my $total = ceil(@args / $n);
+    return part { int( ($i++) / $total ) } @args;
+}
+sub parallel_square {
+    parallel_map { $_ * $_ } @_;
+}
+sub parallel_sum {
+    my @args = @_;
+    sum( parallel_map { sum(@$_) } split_list(4, @args) );
+}
+my $sum = parallel_sum( parallel_square( 1 .. 100 ) );
 
 
-p = multi.Pool( processes=2 )
-pages = p.map(get_url, urls)
+# a good use!
+my @pages = parallel_map { get $_ } @urls;
+
