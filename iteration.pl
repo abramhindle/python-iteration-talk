@@ -55,6 +55,27 @@ sub recsum {
 
 print recsum(1..10);
 
+#recursive tree sum
+my $tree = {};
+$tree->{a}->{b}->{c} = 1; $tree->{a}->{b}->{d} = 2;
+$tree->{a}->{a}->{e} = 3; $tree->{a}->{f} = 4;
+$tree->{g}->{h} = 5; $tree->{j}->{k} = 6;
+$tree->{l} = 7; $tree->{m} = 8; 
+$tree->{n} = 9; $tree->{o} = 10;
+sub treesum {
+    my $node = shift;
+    if (ref($node)) {
+        my $sum = 0;
+        foreach my $key (keys %{$node}) {
+            $sum += treesum($node->{$key});
+        }
+        return $sum;
+    } else {
+        return $node;
+    }
+}
+print treesum($tree);
+#55
 
 # The OO way
 package OnlyEvens;

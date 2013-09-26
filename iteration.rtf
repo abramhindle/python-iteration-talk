@@ -55,6 +55,27 @@
 \par
 {\cf8\b print} recsum({\cf4 1}{\cf4 ..}{\cf4 10});\par
 \par
+{\cf5\i #recursive tree sum}\par
+{\cf8\b my} {\cf7 $}{\cf7 tree} {\cf4 =} \{\};\par
+{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{b\}{\cf4 -}{\cf4 >}\{c\} {\cf4 =} {\cf4 1}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{b\}{\cf4 -}{\cf4 >}\{d\} {\cf4 =} {\cf4 2};\par
+{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{e\} {\cf4 =} {\cf4 3}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{f\} {\cf4 =} {\cf4 4};\par
+{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{g\}{\cf4 -}{\cf4 >}\{h\} {\cf4 =} {\cf4 5}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{j\}{\cf4 -}{\cf4 >}\{k\} {\cf4 =} {\cf4 6};\par
+{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{l\} {\cf4 =} {\cf4 7}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{m\} {\cf4 =} {\cf4 8}; \par
+{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{n\} {\cf4 =} {\cf4 9}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{o\} {\cf4 =} {\cf4 10};\par
+{\cf8\b sub }{\cf19 treesum} \{\par
+    {\cf8\b my} {\cf7 $}{\cf7 node} {\cf4 =} {\cf8 shift};\par
+    {\cf8\b if} ({\cf8 ref}({\cf7 $}{\cf7 node})) \{\par
+        {\cf8\b my} {\cf7 $}{\cf7 sum} {\cf4 =} {\cf4 0};\par
+        {\cf8\b foreach} {\cf8\b my} {\cf7 $}{\cf7 key} ({\cf8 keys} {\cf7 %}\{{\cf7 $}{\cf7 node}\}) \{\par
+            {\cf7 $}{\cf7 sum} {\cf4 +=} treesum({\cf7 $}{\cf7 node}{\cf4 -}{\cf4 >}\{{\cf7 $}{\cf7 key}\});\par
+        \}\par
+        {\cf8\b return} {\cf7 $}{\cf7 sum};\par
+    \} {\cf8\b else} \{\par
+        {\cf8\b return} {\cf7 $}{\cf7 node};\par
+    \}\par
+\}\par
+{\cf8\b print} treesum({\cf7 $}{\cf7 tree});\par
+{\cf5\i #55}\par
 \par
 {\cf5\i # The OO way}\par
 {\cf8 package} OnlyEvens;\par
