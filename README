@@ -1,0 +1,5 @@
+A talk about Perl and iteration. Furthermore it motivates the need for watching your dependencies in your loop bodies in order to exploit map/reduce-like paradigms.
+
+Video version is available at: http://youtu.be/qKXNTn3RkP8
+
+And: http://softwareprocess.es/b/abram-hindle-perl-iteration-talk.mkv
