@@ -123,7 +123,11 @@ sub parallel_sum {
 }
 my $sum = parallel_sum( parallel_square( 1 .. 100 ) );
 
-
 # a good use!
 my @pages = parallel_map { get $_ } @urls;
 
+use List::Util qw(reduce sum);
+# 1 + 2 + 3 + ... + 99 + 100 
+print(reduce { $a + $b } 1..100);
+print(sum(1..100));
+#5050
