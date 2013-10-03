@@ -1,4 +1,7 @@
-A talk about Perl and iteration. Furthermore it motivates the need for watching your dependencies in your loop bodies in order to exploit map/reduce-like paradigms.
+A talk about Javascript and iteration. Furthermore it motivates the need for watching your dependencies in your loop bodies in order to exploit map/reduce-like paradigms.
+
+
+Perl versions of the talk:
 
 Video version is available at: http://youtu.be/qKXNTn3RkP8
 

@@ -1,155 +1,174 @@
-{\rtf1\ansi\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0{\cf5\i # while loop}\par
+{\rtf1\ansi\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red136\green136\blue136;\red186\green33\blue33;\red0\green68\blue221;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0{\chbrdr\chcfpat16 #} {\cf8\b while} loop\par
 \par
-{\cf8\b my} {\cf7 $}{\cf7 condition} {\cf4 =} {\cf4 1};\par
-{\cf8\b while} ({\cf7 $}{\cf7 condition}) \{\par
-    {\cf5\i # ...}\par
-    {\cf7 $}{\cf7 condition} {\cf4 =} {\cf4 !}{\cf7 $}{\cf7 condition};\par
+{\cf8\b var} condition {\cf4 =} {\cf4 1};\par
+{\cf8\b while} (condition) \{\par
+    {\cf5\i // ...\par
+}    condition {\cf4 =} {\cf4 !}condition;\par
 \}\par
-{\cf5\i # condition is False}\par
-\par
-{\cf5\i #how many lines ?}\par
-{\cf8\b my} {\cf7 $}{\cf7 count} {\cf4 =} {\cf4 0};\par
-{\cf7 $}{\cf7 count}{\cf4 +}{\cf4 +} {\cf8\b while}({\cf9 <STDIN>});\par
-\par
-{\cf8\b my} {\cf7 $}{\cf7 x} {\cf4 =} {\cf4 10};\par
-{\cf8\b while} ({\cf7 $}{\cf7 x} {\cf4 >} {\cf4 0}) \{\par
-    {\cf7 $}{\cf7 x}{\cf4 -}{\cf4 -};\par
+{\cf5\i // condition is False\par
+}\par
+{\cf5\i //how many OKs ?\par
+}{\cf8\b var} count {\cf4 =} {\cf4 0};\par
+{\cf8\b while}(confirm({\cf2 "OK???"})) \{\par
+    count{\cf4 ++};\par
 \}\par
-{\cf5\i # x is 0}\par
-\par
-{\cf5\i # maybe you're not sure how many}\par
-{\cf5\i # iterations you need?}\par
-{\cf8\b my} {\cf7 $}{\cf7 x} {\cf4 =} {\cf4 100.0};\par
-{\cf8\b while} ({\cf7 $}{\cf7 x} {\cf4 >} {\cf4 1}) \{\par
-    {\cf7 $}{\cf7 x} {\cf4 /=} {\cf4 3};\par
+{\cf5\i // alert(count);\par
+}\par
+{\cf8\b var} x {\cf4 =} {\cf4 10};\par
+{\cf8\b while} (x {\cf4 >} {\cf4 0}) \{\par
+    x{\cf4 --};\par
+\}\par
+{\cf5\i // x is 0\par
+}\par
+{\cf5\i // maybe you're not sure how many\par
+}{\cf5\i // iterations you need?\par
+}{\cf8\b var} x {\cf4 =} {\cf4 100.0};\par
+{\cf8\b while} (x {\cf4 >} {\cf4 1}) \{\par
+    x {\cf4 /=} {\cf4 3};\par
+\}\par
+{\cf5\i // x is 0.41152263374485604\par
+}\par
+{\cf5\i // for loop\par
+}{\cf8\b var} sum {\cf4 =} {\cf4 0};\par
+{\cf8\b for} ({\cf8\b var} i {\cf4 =} {\cf4 0} ; i {\cf4 <} {\cf4 10}; i{\cf4 ++}) \{\par
+    sum {\cf4 +=} i;\par
+\}\par
+{\cf5\i // sum is 45\par
+}\par
+{\cf8\b function} range(start,end) \{\par
+    {\cf8\b var} out {\cf4 =} [];\par
+    {\cf8\b var} j {\cf4 =} {\cf4 0};\par
+    {\cf8\b for} ({\cf8\b var} i {\cf4 =} start; i {\cf4 <} end; i{\cf4 ++}) \{\par
+        out[j{\cf4 ++}] {\cf4 =} i;\par
+    \}\par
+    {\cf8\b return} out;\par
+\}\par
+{\cf5\i //alert(range(1,10).length);\par
+}\par
+{\cf8\b for} {\cf8\b var} i {\cf8\b in} range({\cf4 1},{\cf4 10}) \{\par
+    alert(i);\par
 \}\par
 \par
-{\cf5\i # for loop}\par
-{\cf8\b my} {\cf7 $}{\cf7 sum} {\cf4 =} {\cf4 0};\par
-{\cf8\b for} {\cf8\b my} {\cf7 $}{\cf7 i} ({\cf4 1}{\cf4 ..}{\cf4 9}) \{\par
-    {\cf7 $}{\cf7 sum} {\cf4 +=} {\cf7 $}{\cf7 i};\par
-\}\par
-{\cf5\i # sum is 45}\par
-\par
-{\cf5\i # for loop}\par
-{\cf8\b my} {\cf7 $}{\cf7 sum} {\cf4 =} {\cf4 0};\par
-{\cf8\b for} ( {\cf8\b my} {\cf7 $}{\cf7 i} {\cf4 =} {\cf4 1} ; {\cf7 $}{\cf7 i} {\cf4 <} {\cf4 100000}; {\cf7 $}{\cf7 i}{\cf4 +}{\cf4 +} ) \{\par
-    {\cf7 $}{\cf7 sum} {\cf4 +=} {\cf7 $}{\cf7 i};\par
-\}\par
-{\cf5\i # sum is 4 999 950 000}\par
-\par
-{\cf8\b my} {\cf7 $}{\cf7 s} {\cf4 =} {\cf2 ""};\par
-{\cf8\b for} {\cf8\b my} {\cf7 $}{\cf7 elm} ({\cf2 "a"},{\cf2 "b"},{\cf2 "c"}) \{\par
-    {\cf7 $}{\cf7 s} {\cf4 .}{\cf4 =} {\cf7 $}{\cf7 elm};\par
-\}\par
-{\cf5\i # s is abc}\par
-\par
-{\cf5\i # recursive way}\par
-{\cf8\b sub }{\cf19 recsum} \{\par
-    {\cf8\b if} ({\cf7 @}{\cf7 _}) \{\par
-        {\cf8\b my} {\cf7 $}{\cf7 v} {\cf4 =} {\cf8 shift} {\cf7 @}{\cf7 _};\par
-        {\cf8\b return} {\cf7 $}{\cf7 v} {\cf4 +} recsum({\cf7 @}{\cf7 _});\par
+{\cf8\b var} s {\cf4 =} {\cf2 ""};\par
+{\cf8\b var} v {\cf4 =} [{\cf2 "a"},{\cf2 "b"},{\cf2 "c"}];\par
+{\cf8\b var} u {\cf4 =} \{{\cf2 "A"}{\cf4 :}{\cf2 "a"}, {\cf2 "B"}{\cf4 :}{\cf2 "b"}, {\cf2 "C"}{\cf4 :}{\cf2 "c"}\};\par
+{\cf8\b for} ({\cf8\b var} i {\cf8\b in} v) \{\par
+    s {\cf4 +=} v[i]; {\cf5\i // iterates over keys\par
+}\}\par
+{\cf8\b for} ({\cf8\b var} i {\cf8\b in} u) \{\par
+    s {\cf4 +=} u[i]; {\cf5\i // iterates over keys\par
+}\}\par
+alert(s);\par
+{\cf5\i // s starts with abc\par
+}\par
+{\cf5\i // recursive way\par
+}{\cf8\b function} recsum(l) \{\par
+    {\cf8\b if} (l.length {\cf4 >} {\cf4 0}) \{\par
+        {\cf8\b var} v {\cf4 =} l.pop();\par
+        {\cf8\b return} v {\cf4 +} recsum(l);\par
     \}\par
     {\cf8\b return} {\cf4 0};\par
 \}\par
+alert(recsum([{\cf4 1},{\cf4 2},{\cf4 3},{\cf4 4}]));\par
 \par
-{\cf8\b print} recsum({\cf4 1}{\cf4 ..}{\cf4 10});\par
-\par
-{\cf5\i #recursive tree sum}\par
-{\cf8\b my} {\cf7 $}{\cf7 tree} {\cf4 =} \{\};\par
-{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{b\}{\cf4 -}{\cf4 >}\{c\} {\cf4 =} {\cf4 1}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{b\}{\cf4 -}{\cf4 >}\{d\} {\cf4 =} {\cf4 2};\par
-{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{e\} {\cf4 =} {\cf4 3}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{a\}{\cf4 -}{\cf4 >}\{f\} {\cf4 =} {\cf4 4};\par
-{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{g\}{\cf4 -}{\cf4 >}\{h\} {\cf4 =} {\cf4 5}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{j\}{\cf4 -}{\cf4 >}\{k\} {\cf4 =} {\cf4 6};\par
-{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{l\} {\cf4 =} {\cf4 7}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{m\} {\cf4 =} {\cf4 8}; \par
-{\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{n\} {\cf4 =} {\cf4 9}; {\cf7 $}{\cf7 tree}{\cf4 -}{\cf4 >}\{o\} {\cf4 =} {\cf4 10};\par
-{\cf8\b sub }{\cf19 treesum} \{\par
-    {\cf8\b my} {\cf7 $}{\cf7 node} {\cf4 =} {\cf8 shift};\par
-    {\cf8\b if} ({\cf8 ref}({\cf7 $}{\cf7 node})) \{\par
-        {\cf8\b my} {\cf7 $}{\cf7 sum} {\cf4 =} {\cf4 0};\par
-        {\cf8\b foreach} {\cf8\b my} {\cf7 $}{\cf7 key} ({\cf8 keys} {\cf7 %}\{{\cf7 $}{\cf7 node}\}) \{\par
-            {\cf7 $}{\cf7 sum} {\cf4 +=} treesum({\cf7 $}{\cf7 node}{\cf4 -}{\cf4 >}\{{\cf7 $}{\cf7 key}\});\par
-        \}\par
-        {\cf8\b return} {\cf7 $}{\cf7 sum};\par
+{\cf8\b var} tree {\cf4 =} \{{\cf2 "a"}{\cf4 :}\{{\cf2 "b"}{\cf4 :}\{{\cf2 "c"}{\cf4 :}{\cf4 1},{\cf2 "d"}{\cf4 :}{\cf4 2},{\cf2 "e"}{\cf4 :}{\cf4 3},{\cf2 "f"}{\cf4 :}{\cf4 4}\},{\cf2 "g"}{\cf4 :}{\cf4 5}\},{\cf2 "h"}{\cf4 :}\{{\cf2 "i"}{\cf4 :}{\cf4 6}\}\};\par
+{\cf8\b function} treesum(tree) \{\par
+    {\cf8\b if} ({\cf8\b typeof} tree {\cf4 ===} {\cf2 "number"}) \{\par
+        {\cf8\b return} tree;\par
     \} {\cf8\b else} \{\par
-        {\cf8\b return} {\cf7 $}{\cf7 node};\par
+        {\cf8\b var} sum {\cf4 =} {\cf4 0};\par
+        {\cf8\b for} ({\cf8\b var} key {\cf8\b in} tree) \{\par
+            sum {\cf4 +=} treesum(tree[key]);\par
+        \}\par
+        {\cf8\b return} sum;\par
     \}\par
 \}\par
-{\cf8\b print} treesum({\cf7 $}{\cf7 tree});\par
-{\cf5\i #55}\par
+alert(treesum(tree));\par
 \par
-{\cf5\i # The OO way}\par
-{\cf8 package} OnlyEvens;\par
-{\cf8\b use} Moose;\par
-has seq {\cf4 =}{\cf4 >} (is{\cf4 =}{\cf4 >}{\cf2 'rw'}, default{\cf4 =}{\cf4 >}sub\{{\cf4 []}\});\par
-has {\cf8 index} {\cf4 =}{\cf4 >} (is {\cf4 =}{\cf4 >} {\cf2 'rw'}, default {\cf4 =}{\cf4 >} {\cf4 0});\par
 \par
-{\cf8\b sub }{\cf19 has_next} \{\par
-    {\cf8\b my} ({\cf7 $}{\cf7 self}) {\cf4 =} {\cf7 @}{\cf7 _};\par
-    {\cf8\b return} {\cf7 $}{\cf7 self}{\cf4 -}{\cf4 >}{\cf8 index} {\cf4 <} {\cf8 scalar}({\cf7 @}\{{\cf7 $}{\cf7 self}{\cf4 -}{\cf4 >}seq\});\par
+{\cf5\i // OO Iterator way\par
+}OnlyEvens {\cf4 =} {\cf8\b function}(seq) \{\par
+    {\cf8\b this}.seq {\cf4 =} seq;\par
+    {\cf8\b this}.index {\cf4 =} {\cf4 0};\par
+    self {\cf4 =} {\cf8\b this};\par
+    {\cf8\b this}.hasNext {\cf4 =} {\cf8\b function}() \{\par
+        {\cf8\b return} self.index {\cf4 <} self.seq.length\par
+    \}\par
+    {\cf8\b this}.next {\cf4 =} {\cf8\b function}() \{\par
+        {\cf8\b var} v {\cf4 =} self.seq[self.index];\par
+        self.index {\cf4 +=} {\cf4 2};\par
+        {\cf8\b return} v;\par
+    \}\par
+\};\par
+{\cf8\b var} oe {\cf4 =} {\cf8\b new} OnlyEvens([{\cf4 0},{\cf4 1},{\cf4 2},{\cf4 3},{\cf4 4},{\cf4 5},{\cf4 6},{\cf4 7},{\cf4 8},{\cf4 9},{\cf4 10}]);\par
+{\cf8\b var} s {\cf4 =} {\cf2 ""};\par
+{\cf8\b while} (oe.hasNext()) \{\par
+    s {\cf4 +=} oe.next();\par
 \}\par
-{\cf8\b sub }{\cf19 next} \{\par
-    {\cf8\b my} ({\cf7 $}{\cf7 self}) {\cf4 =} {\cf7 @}{\cf7 _};\par
-    {\cf8\b my} {\cf7 $}{\cf7 v} {\cf4 =} {\cf7 $}{\cf7 self}{\cf4 -}{\cf4 >}seq{\cf4 -}{\cf4 >}[{\cf7 $}{\cf7 self}{\cf4 -}{\cf4 >}{\cf8 index}];\par
-    {\cf7 $}{\cf7 self}{\cf4 -}{\cf4 >}{\cf8 index}({\cf7 $}{\cf7 self}{\cf4 -}{\cf4 >}{\cf8 index} {\cf4 +} {\cf4 2});\par
-    {\cf8\b return} {\cf7 $}{\cf7 v};\par
+alert(s);\par
+\par
+\par
+{\cf5\i // add 1 to a list\par
+}{\cf8\b var} v {\cf4 =} [{\cf4 1},{\cf4 2},{\cf4 3},{\cf4 4},{\cf4 5}];\par
+{\cf8\b function} inc(x) \{ {\cf8\b return} {\cf4 1} {\cf4 +} x; \}\par
+{\cf8\b var} u {\cf4 =} v.map(inc);\par
+{\cf5\i // alert(u); 2,3,4,5,6\par
+}{\cf5\i // alert(v); 1,2,3,4,5\par
+}\par
+{\cf8\b function} basename(path) \{\par
+    {\cf8\b var} sp {\cf4 =} path.split({\cf2 "/"});\par
+    {\cf8\b return} sp[sp.length {\cf4 -} {\cf4 1}];\par
 \}\par
-{\cf4 1};\par
+{\cf8\b var} v {\cf4 =} [{\cf2 "/home"},{\cf2 "/file"},{\cf2 "/usr/local"}];\par
+{\cf8\b var} u {\cf4 =} v.map(basename);\par
+{\cf5\i // u = ['home','file','local']\par
+}\par
 \par
-{\cf8\b my} {\cf7 $}{\cf7 iter} {\cf4 =} OnlyEvens{\cf4 -}{\cf4 >}{\cf8\b new}( seq {\cf4 =}{\cf4 >} [{\cf4 1}{\cf4 ..}{\cf4 10}] );\par
-{\cf8\b while} ({\cf7 $}{\cf7 iter}{\cf4 -}{\cf4 >}has_next()) \{\par
-    {\cf8\b print} {\cf7 $}{\cf7 iter}{\cf4 -}{\cf4 >}{\cf8\b next}(){\cf4 .}{\cf7 $/};\par
+{\cf8\b function} GET(url) \{\par
+    {\cf8\b var} request {\cf4 =} {\cf8\b new} XMLHttpRequest();\par
+    request.open({\cf2 "GET"}, url, {\cf8\b false});\par
+    request.send({\cf8\b null});\par
+    {\cf8\b return} request.responseText;\par
 \}\par
+{\cf8\b var} urls {\cf4 =} [{\cf2 "http://cbc.ca"},{\cf2 "http://gc.ca"},{\cf2 "http://alberta.ca"}];\par
+{\cf8\b var} pages {\cf4 =} urls.map(GET);\par
 \par
-{\cf5\i # add 1 to a list}\par
-{\cf8\b my} {\cf7 @}{\cf7 v} {\cf4 =} ({\cf4 1}{\cf4 ..}{\cf4 30});\par
-{\cf8\b my} {\cf7 @}{\cf7 u} {\cf4 =} {\cf8 map} \{ {\cf7 $}{\cf7 _} {\cf4 +} {\cf4 1} \}  {\cf7 @}{\cf7 v};\par
-{\cf5\i # u is now [2,3,4,..,31], v is still [1,2,3]}\par
+{\cf5\i // this is why you want blocks with\par
+}{\cf5\i // few dependencies!\par
+}{\cf5\i // http://adambom.github.io/parallel.js/\par
+}{\cf4 <}script src{\cf4 =}{\cf2 "parallel.js"}{\cf4 >}{\cf4 <}{\chbrdr\chcfpat16 /}{\chbrdr\chcfpat16 s}{\chbrdr\chcfpat16 c}{\chbrdr\chcfpat16 r}{\chbrdr\chcfpat16 i}{\chbrdr\chcfpat16 p}{\chbrdr\chcfpat16 t}{\chbrdr\chcfpat16 >}\par
+{\cf4 <}script{\cf4 >}\par
 \par
-{\cf8\b use} {\cf19\b File::}Basename;\par
-\par
-{\cf8\b my} {\cf7 @}{\cf7 v} {\cf4 =} ({\cf2 "/home"},{\cf2 "/file"},{\cf2 "/usr/local"});\par
-{\cf8\b my} {\cf7 @}{\cf7 u} {\cf4 =} {\cf8 map} \{ basename {\cf7 $}{\cf7 _} \} {\cf7 @}{\cf7 v};\par
-{\cf8\b my} {\cf7 @}{\cf7 u} {\cf4 =} {\cf8 map}({\cf8 uc},{\cf7 @}{\cf7 v});\par
-{\cf5\i #['/HOME', '/FILE', '/USR/LOCAL']}\par
-\par
-{\cf8\b use} {\cf19\b LWP::}Simple;\par
-\par
-{\cf8\b my} {\cf7 @}{\cf7 urls} {\cf4 =} ({\cf2 "http://cbc.ca"},{\cf2 "http://gc.ca"},{\cf2 "http://alberta.ca"});\par
-{\cf8\b my} {\cf7 @}{\cf7 pages} {\cf4 =} {\cf8 map} \{ get {\cf7 $}{\cf7 _} \} {\cf7 @}{\cf7 urls};\par
-\par
-{\cf5\i # this is why you want blocks with}\par
-{\cf5\i # few dependencies!}\par
-{\cf5\i # slower}\par
-{\cf8\b use} {\cf19\b Parallel::}parallel_map;\par
-{\cf8\b sub }{\cf19 square} \{ {\cf7 $}{\cf7 _}[{\cf4 0}] {\cf4 *} {\cf7 $}{\cf7 _}[{\cf4 0}] \}\par
-{\cf8\b my} {\cf7 @}{\cf7 u} {\cf4 =} parallel_map \{square({\cf7 $}{\cf7 _})\}  {\cf4 1}{\cf4 ..}{\cf4 1000000};\par
-{\cf8\b print} {\cf8 scalar}({\cf7 @}{\cf7 u});\par
-{\cf5\i #999999}\par
-\par
-{\cf8\b use} {\cf19\b List::}Util {\cf8 qw(}{\cf8 reduce sum}{\cf8 )};\par
-{\cf8\b use} {\cf19\b List::}MoreUtils {\cf8 qw(}{\cf8 part}{\cf8 )};\par
-{\cf8\b use} POSIX;\par
-{\cf8\b sub }{\cf19 split_list} \{\par
-    {\cf8\b my} ({\cf7 $}{\cf7 n}, {\cf7 @}{\cf7 args}) {\cf4 =} {\cf7 @}{\cf7 _};\par
-    {\cf8\b my} {\cf7 $}{\cf7 i} {\cf4 =} {\cf4 0};\par
-    {\cf8\b my} {\cf7 $}{\cf7 total} {\cf4 =} ceil({\cf7 @}{\cf7 args} {\cf4 /} {\cf7 $}{\cf7 n});\par
-    {\cf8\b return} part \{ {\cf8 int}( ({\cf7 $}{\cf7 i}{\cf4 +}{\cf4 +}) {\cf4 /} {\cf7 $}{\cf7 total} ) \} {\cf7 @}{\cf7 args};\par
+{\cf8\b function} sum(l) \{\par
+    {\cf8\b var} sum {\cf4 =} {\cf4 0.0};\par
+    {\cf8\b for} ({\cf8\b var} i {\cf8\b in} l) \{\par
+	sum {\cf4 +=} l[i];\par
+    \}\par
+    {\cf8\b return} sum;\par
 \}\par
-{\cf8\b sub }{\cf19 parallel_square} \{\par
-    parallel_map \{ {\cf7 $}{\cf7 _} {\cf4 *} {\cf7 $}{\cf7 _} \} {\cf7 @}{\cf7 _};\par
+{\cf8\b function} range(start,end) \{\par
+    {\cf8\b var} out {\cf4 =} [];\par
+    {\cf8\b var} j {\cf4 =} {\cf4 0};\par
+    {\cf8\b for} ({\cf8\b var} i {\cf4 =} start; i {\cf4 <} end; i{\cf4 ++}) \{\par
+        out[j{\cf4 ++}] {\cf4 =} i;\par
+    \}\par
+    {\cf8\b return} out;\par
 \}\par
-{\cf8\b sub }{\cf19 parallel_sum} \{\par
-    {\cf8\b my} {\cf7 @}{\cf7 args} {\cf4 =} {\cf7 @}{\cf7 _};\par
-    sum( parallel_map \{ sum({\cf7 @$}{\cf7 _}) \} split_list({\cf4 4}, {\cf7 @}{\cf7 args}) );\par
+{\cf8\b var} p {\cf4 =} {\cf8\b new} Parallel([range({\cf4 1},{\cf4 10000}),range({\cf4 10001},{\cf4 20000}),range({\cf4 20001},{\cf4 30000})]);\par
+p.map(sum).reduce(sum).then(alert);\par
+\par
+{\cf8\b function} GET(url) \{\par
+    {\cf8\b var} request {\cf4 =} {\cf8\b new} XMLHttpRequest();\par
+    request.open({\cf2 "GET"}, url, {\cf8\b false});\par
+    request.send({\cf8\b null});\par
+    {\cf8\b return} request.responseText;\par
 \}\par
-{\cf8\b my} {\cf7 $}{\cf7 sum} {\cf4 =} parallel_sum( parallel_square( {\cf4 1} {\cf4 ..} {\cf4 100} ) );\par
+{\cf8\b var} urls {\cf4 =} [{\cf2 "map.html"},{\cf2 "map.html"},{\cf2 "map.html"}];\par
+alert(urls.map(GET));\par
+{\cf5\i // You need proper URLs and permission!\par
+}{\cf8\b var} urls {\cf4 =} [{\cf2 "file:///./map.html"},{\cf2 "file:///./map.html"},{\cf2 "file:///./map.html"}];\par
+{\cf8\b var} urls {\cf4 =} [{\cf2 "http://cbc.ca"},{\cf2 "http://gc.ca"},{\cf2 "http://alberta.ca"}];\par
+{\cf8\b new} Parallel(urls).map(GET).then(alert);\par
 \par
-{\cf5\i # a good use!}\par
-{\cf8\b my} {\cf7 @}{\cf7 pages} {\cf4 =} parallel_map \{ get {\cf7 $}{\cf7 _} \} {\cf7 @}{\cf7 urls};\par
-\par
-{\cf8\b use} {\cf19\b List::}Util {\cf8 qw(}{\cf8 reduce sum}{\cf8 )};\par
-{\cf5\i # 1 + 2 + 3 + ... + 99 + 100 }\par
-{\cf8\b print}(reduce \{ {\cf7 $}{\cf7 a} {\cf4 +} {\cf7 $}{\cf7 b} \} {\cf4 1}{\cf4 ..}{\cf4 100});\par
-{\cf8\b print}(sum({\cf4 1}{\cf4 ..}{\cf4 100}));\par
-{\cf5\i #5050}\par
+{\cf4 <}{\chbrdr\chcfpat16 /}{\chbrdr\chcfpat16 s}{\chbrdr\chcfpat16 c}{\chbrdr\chcfpat16 r}{\chbrdr\chcfpat16 i}{\chbrdr\chcfpat16 p}{\chbrdr\chcfpat16 t}{\chbrdr\chcfpat16 >}\par
 }
