@@ -140,8 +140,12 @@ function sum(l) {
 }
 alert(sum(v));
 
+function sqr(v) { return v * v; }
+alert(sum(range(1,100).map(sqr)));
+var p = new Parallel(range(1,100));//this could mean 100 workers!
+p.map(sqr).then(function(d) { alert("what"+sum(d)); });
 
-print(sum(1..100));
+
 
 // this is why you want blocks with
 // few dependencies!

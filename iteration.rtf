@@ -133,6 +133,20 @@ alert(s);\par
 {\cf8\b var} urls {\cf4 =} [{\cf2 "http://cbc.ca"},{\cf2 "http://gc.ca"},{\cf2 "http://alberta.ca"}];\par
 {\cf8\b var} pages {\cf4 =} urls.map(GET);\par
 \par
+{\cf8\b var} v {\cf4 =} [{\cf4 1},{\cf4 2},{\cf4 3},{\cf4 4},{\cf4 5},{\cf4 6},{\cf4 7},{\cf4 8},{\cf4 9}];\par
+alert(v.reduce({\cf8\b function}(x,y) \{ {\cf8\b return} x {\cf4 +} y \}));\par
+{\cf8\b function} sum(l) \{\par
+    {\cf8\b return} l.reduce({\cf8\b function}(x,y) \{{\cf8\b return} x {\cf4 +} y\});\par
+\}\par
+alert(sum(v));\par
+\par
+{\cf8\b function} sqr(v) \{ {\cf8\b return} v {\cf4 *} v; \}\par
+alert(sum(range({\cf4 1},{\cf4 100}).map(sqr)));\par
+{\cf8\b var} p {\cf4 =} {\cf8\b new} Parallel(range({\cf4 1},{\cf4 100}));{\cf5\i //this could mean 100 workers!\par
+}p.map(sqr).then({\cf8\b function}(d) \{ alert({\cf2 "what"}{\cf4 +}sum(d)); \});\par
+\par
+\par
+\par
 {\cf5\i // this is why you want blocks with\par
 }{\cf5\i // few dependencies!\par
 }{\cf5\i // http://adambom.github.io/parallel.js/\par
