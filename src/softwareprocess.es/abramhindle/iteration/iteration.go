@@ -56,9 +56,44 @@ func (tree Tree) Iter() <-chan Tree {
 
 type StringIterator struct {
 	current int
-	string s
+	s []rune
 }
 
+type EvenStringIterator struct {
+	current int
+	s []rune
+}
+
+
+// http://ewencp.org/blog/golang-iterators/
+func (si *StringIterator) Next() bool {
+	si.current++
+	return (si.current < len(si.s))
+}
+
+func (si *StringIterator) Value() string {
+	return string(si.s[si.current])
+}
+
+
+func Iterator(s string) *StringIterator {
+	return &StringIterator{current: -1, s: []rune(s)}
+}
+
+
+func (si *EvenStringIterator) Next() bool {
+	si.current += 2;
+	return (si.current < len(si.s))
+}
+
+func (si *EvenStringIterator) Value() string {
+	return string(si.s[si.current])
+}
+
+
+func EvenIterator(s string) *EvenStringIterator {
+	return &EvenStringIterator{current: -1, s: []rune(s)}
+}
 
 
 func main() {
@@ -158,4 +193,16 @@ func main() {
 	for tree := range tree.Iter() {
 		fmt.Printf("Now via Iter Node value %d\n",tree.Value)
 	}
+
+	si := Iterator(s)
+	for si.Next() {
+		fmt.Printf("String val! %s\n", si.Value())
+	}
+
+	si2 := EvenIterator(s)
+	for si2.Next() {
+		fmt.Printf("Even String val! %s\n", si2.Value())
+	}
+
+
 }
