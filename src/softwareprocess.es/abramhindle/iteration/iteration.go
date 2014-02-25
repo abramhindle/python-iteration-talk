@@ -5,6 +5,7 @@ import "os"
 import "bufio"
 import "strings"
 import "net/http"
+import "reflect"
 
 type Tree struct {
     Value int
@@ -232,8 +233,66 @@ func parallelIntIntMapReduce( l []int, mapper (func(int) int), reducer (func(int
 }
 
 
+type Mapper interface {	
+	Map( (func(interface{})interface{}) ) ([](interface{}))
+}
+
+type Reducer interface {	
+	Reduce( (func(interface{},interface{})interface{}) ) (interface{})
+}
 
 
+type E interface{}
+
+type ints []int
+//
+
+func (iarr ints) Map(cb (func(E)E)) ([]E) {
+	out := make( []E, len(iarr))
+	for i,v := range iarr {
+		out[i] = cb( v )
+	}
+	return out	
+}
+
+type Collection []E
+func (iarr Collection) Map(cb (func(E)E)) ([]E) {
+	out := make( []E, len(iarr))
+	for i,v := range iarr {
+		out[i] = cb( v )
+	}
+	return out	
+}
+
+
+
+// https://stackoverflow.com/questions/12753805/type-converting-slices-of-interfaces-in-go/12754757#12754757
+func collection(sliceOfStuff E) Collection {
+	ourSlice := reflect.ValueOf(sliceOfStuff)
+	//ourSlice := sliceOfStuff.(Slice)
+	out := make([]E, ourSlice.Len())
+	for i := 0 ; i < ourSlice.Len(); i++ {
+		out[i] = ourSlice.Index(i).Interface()
+	}
+	return out
+}
+
+func Map(coll E, cb (func(E)E)) ([]E) {
+	return collection(coll).Map(cb)
+}
+
+func (iarr Collection) Reduce(cb (func(E,E)E)) E {
+	o := iarr[0]
+	m := len(iarr)
+	for i := 1; i < m; i++ {
+		o = cb( iarr[i], o)
+	}
+	return o
+}
+
+func Reduce(coll E, cb (func(E,E)E)) E {
+	return collection(coll).Reduce(cb)
+}
 
 func main() {
 	fmt.Printf("Hello, world.\n")
@@ -395,7 +454,46 @@ func main() {
 
 	preduced := parallelIntIntMapReduce( series(1,100000000), sqr, iadd, 4)
 	fmt.Printf("Reduced %v\n", preduced)
+
+	//evex := ints(vex).([]E)
+	//vexout := Map(evex, inc.(func(E)E))
+	evex := ints(vex).Map( func(x E) E {
+		return (x.(int)+1)
+	})
+	fmt.Printf("Generic Map: %v\n", evex)
+	evex2 := ints(vex).Map( func(x E) E {
+		return (float32(x.(int))+1.1)
+	})
+	fmt.Printf("Generic Map: %v\n", evex2)
+
+	svex := []string{"a","b","c"}
+	sout := collection(svex).Map( func(x E) E {
+		return (x.(string) + x.(string))
+	})
 	
+	fmt.Printf("Generic Map w/ String: %v\n", sout)
+
+	sout2 := collection(svex).Map( func(x E) E {
+		return len(x.(string))
+	})
 	
+	fmt.Printf("Generic Map w/ String: %v\n", sout2)
+
+
+	evex3 := collection(vex).Map( func(x E) E {
+		return (x.(int)+1)
+	})
+	fmt.Printf("Generic Map: %v\n", evex3)
+
+	slowMapRes := Map( vex, func(x E) E { 
+		y := x.(int)
+		return (y*y)
+	})
+	fmt.Printf("Generic Map function: %v\n", slowMapRes)
+
+	slowMapReduce := Reduce( slowMapRes, func(x E, o E) E {
+		return x.(int) + o.(int)
+	})
+	fmt.Printf("Generic Reduce function: %v\n", slowMapReduce)
 }
 
