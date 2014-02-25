@@ -116,6 +116,92 @@ func strStrMap( iarr []string, cb (func(string) string)) []string {
 }
 
 
+func series(start int, end int) []int {
+	length := end - start + 1
+	out := make( []int, length )
+	for i := 0; i < length; i++ {
+		out[i] = start + i
+	}
+	return out
+}
+
+func parallelIntIntMap( l []int, f (func(int) int), workers int) []int {
+	chans := make( [](chan []int),  workers )
+	//var chans [workers]chan []int
+	for i := range chans {
+		chans[i] = make(chan []int)
+	}
+
+	unit := len(l)/workers
+	for i := 0 ; i< workers; i++ {
+		mychan := chans[i]
+		start := i * unit
+		end := (i + 1)*unit
+		if end >= len(l) {
+			end = len(l) 
+		}
+		subl := l[start:end]
+		par := func(l []int) {
+			mychan <- intIntMap(l, f)
+			close(mychan)
+		}
+		go par(subl)
+	}
+	out := make([]int, len(l))
+	for i := 0; i < workers; i++ {
+		arr := <- chans[i]
+		start := i*unit
+		end := start + len(arr)
+		copy(out[start:end], arr)
+	}
+	return out
+}
+
+
+func parallelStrStrMap( l []string, f (func(string) string), workers int) []string {
+	chans := make( [](chan []string),  workers )
+	//var chans [workers]chan []string
+	for i := range chans {
+		chans[i] = make(chan []string)
+	}
+
+	unit := len(l)/workers
+	for i := 0 ; i< workers; i++ {
+		mychan := chans[i]
+		start := i * unit
+		end := (i + 1)*unit
+		if end >= len(l) {
+			end = len(l) 
+		}
+		subl := l[start:end]
+		par := func(l []string) {
+			mychan <- strStrMap(l, f)
+			close(mychan)
+		}
+		go par(subl)
+	}
+	out := make([]string, len(l))
+	for i := 0; i < workers; i++ {
+		arr := <- chans[i]
+		start := i*unit
+		end := start + len(arr)
+		copy(out[start:end], arr)
+	}
+	return out
+}
+
+func intIntReduce( iarr []int, cb (func(int,int) int)) []int {
+	o := iarr[0]
+	m := len(iarr)
+	for i := 1; i < m; i++ {
+		o = cb( iarr[i], o)
+	}
+	return o
+}
+
+
+
+
 func main() {
 	fmt.Printf("Hello, world.\n")
 	condition := false
@@ -253,5 +339,23 @@ func main() {
 	statuses := strStrMap(urls, status);
 	fmt.Printf("statuses: %v\n", statuses)
 	
+	mySum := func(l []int) int {
+		sum := 0
+		for _,v := range l {
+			sum += v
+		}
+		return(sum)
+	}
+	
+	sumres := mySum( intIntMap(series(1,1000),sqr))
+	fmt.Printf("sumres: %v\n", sumres)
+	psumres := mySum(parallelIntIntMap( series(1,1000), sqr, 4))
+	fmt.Printf("psumres: %v\n", psumres)
+	
+	pgets := parallelStrStrMap( urls, status, 3)
+	fmt.Printf("Stupid examples with URLs %v\n", pgets)
+
+	
+
 }
 
