@@ -190,7 +190,7 @@ func parallelStrStrMap( l []string, f (func(string) string), workers int) []stri
 	return out
 }
 
-func intIntReduce( iarr []int, cb (func(int,int) int)) []int {
+func intIntReduce( iarr []int, cb (func(int,int) int)) int {
 	o := iarr[0]
 	m := len(iarr)
 	for i := 1; i < m; i++ {
@@ -198,6 +198,39 @@ func intIntReduce( iarr []int, cb (func(int,int) int)) []int {
 	}
 	return o
 }
+
+
+func parallelIntIntMapReduce( l []int, mapper (func(int) int), reducer (func(int,int) int),workers int) int {
+	chans := make( [](chan int),  workers )
+	//var chans [workers]chan []int
+	for i := range chans {
+		chans[i] = make(chan int)
+	}
+
+	unit := len(l)/workers
+	for i := 0 ; i< workers; i++ {
+		mychan := chans[i]
+		start := i * unit
+		end := (i + 1)*unit
+		if end >= len(l) {
+			end = len(l) 
+		}
+		subl := l[start:end]
+		par := func(l []int) {
+			mychan <- intIntReduce(intIntMap(l, mapper), reducer)
+			close(mychan)
+		}
+		go par(subl)
+	}
+
+	reductions := make( []int, workers)
+	for i := 0; i < workers; i++ {
+		r := <- chans[i]
+		reductions[i] = r
+	}
+	return intIntReduce(reductions, reducer)
+}
+
 
 
 
@@ -355,7 +388,14 @@ func main() {
 	pgets := parallelStrStrMap( urls, status, 3)
 	fmt.Printf("Stupid examples with URLs %v\n", pgets)
 
-	
+	vex := []int{1,2,3,4,5,6,7,8,9};
+	iadd := func(x, y int) int { return(x + y) }
+	vexr := intIntReduce(vex, iadd)
+	fmt.Printf("Sum: %v\n", vexr)
 
+	preduced := parallelIntIntMapReduce( series(1,100000000), sqr, iadd, 4)
+	fmt.Printf("Reduced %v\n", preduced)
+	
+	
 }
 
