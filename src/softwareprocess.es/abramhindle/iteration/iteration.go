@@ -259,7 +259,6 @@ type Reducer interface {
 	Reduce( (func(interface{},interface{})interface{}) ) (interface{})
 }
 
-
 type E interface{}
 
 type ints []int

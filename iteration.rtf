@@ -1,10 +1,29 @@
 {\rtf1\ansi\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red128\green128\blue128;\red186\green33\blue33;\red0\green64\blue208;\red102\green102\blue102;\red64\green128\blue128;\red160\green160\blue0;\red25\green23\blue124;\red0\green128\blue0;\red187\green102\blue136;\red187\green102\blue34;\red136\green0\blue0;\red170\green34\blue255;\red153\green153\blue153;\red0\green160\blue0;\red160\green0\blue0;\red255\green0\blue0;\red128\green0\blue128;\red176\green0\blue64;\red0\green0\blue255;\red187\green187\blue187;\red188\green122\blue0;\red0\green0\blue128;\red125\green144\blue41;\red210\green65\blue58;}\f0{\cf8\b package} main\par
 \par
+{\cf5\i /*\par
+Copyright 2014 Abram Hindle\par
+Copyright 2013 Ewen Cheslack-Postava iterator inspiration http://ewencp.org/blog/golang-iterators/\par
+Copyright 2012 Stephen Weinberg (reflection example with slices from https://stackoverflow.com/questions/12753805/type-converting-slices-of-interfaces-in-go/12754757#12754757)\par
+\par
+Licensed under the Apache License, Version 2.0 (the "License");\par
+you may not use this file except in compliance with the License.\par
+You may obtain a copy of the License at\par
+\par
+    http://www.apache.org/licenses/LICENSE-2.0\par
+\par
+Unless required by applicable law or agreed to in writing, software\par
+distributed under the License is distributed on an "AS IS" BASIS,\par
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\par
+See the License for the specific language governing permissions and\par
+limitations under the License.\par
+*/}\par
+\par
 {\cf8\b import} {\cf2 "fmt"}\par
 {\cf8\b import} {\cf2 "os"}\par
 {\cf8\b import} {\cf2 "bufio"}\par
 {\cf8\b import} {\cf2 "strings"}\par
 {\cf8\b import} {\cf2 "net/http"}\par
+{\cf8\b import} {\cf2 "reflect"}\par
 \par
 {\cf8\b type} Tree {\cf8\b struct} \{\par
     Value {\cf8 int}\par
@@ -232,8 +251,65 @@
 \}\par
 \par
 \par
+{\cf8\b type} Mapper {\cf8\b interface} \{	\par
+	Map( ({\cf8\b func}({\cf8\b interface}\{\}){\cf8\b interface}\{\}) ) ([]({\cf8\b interface}\{\}))\par
+\}\par
+\par
+{\cf8\b type} Reducer {\cf8\b interface} \{	\par
+	Reduce( ({\cf8\b func}({\cf8\b interface}\{\},{\cf8\b interface}\{\}){\cf8\b interface}\{\}) ) ({\cf8\b interface}\{\})\par
+\}\par
+\par
+{\cf8\b type} E {\cf8\b interface}\{\}\par
+\par
+{\cf8\b type} ints []{\cf8 int}\par
+{\cf5\i //\par
+}\par
+{\cf8\b func} (iarr ints) Map(cb ({\cf8\b func}(E)E)) ([]E) \{\par
+	out := {\cf8 make}( []E, {\cf8 len}(iarr))\par
+	{\cf8\b for} i,v := {\cf8\b range} iarr \{\par
+		out[i] = cb( v )\par
+	\}\par
+	{\cf8\b return} out	\par
+\}\par
+\par
+{\cf8\b type} Collection []E\par
+{\cf8\b func} (iarr Collection) Map(cb ({\cf8\b func}(E)E)) ([]E) \{\par
+	out := {\cf8 make}( []E, {\cf8 len}(iarr))\par
+	{\cf8\b for} i,v := {\cf8\b range} iarr \{\par
+		out[i] = cb( v )\par
+	\}\par
+	{\cf8\b return} out	\par
+\}\par
 \par
 \par
+\par
+{\cf5\i // https://stackoverflow.com/questions/12753805/type-converting-slices-of-interfaces-in-go/12754757#12754757\par
+}{\cf8\b func} collection(sliceOfStuff E) Collection \{\par
+	ourSlice := reflect.ValueOf(sliceOfStuff)\par
+	{\cf5\i //ourSlice := sliceOfStuff.(Slice)\par
+}	out := {\cf8 make}([]E, ourSlice.Len())\par
+	{\cf8\b for} i := {\cf4 0} ; i < ourSlice.Len(); i++ \{\par
+		out[i] = ourSlice.Index(i).Interface()\par
+	\}\par
+	{\cf8\b return} out\par
+\}\par
+\par
+{\cf8\b func} Map(coll E, cb ({\cf8\b func}(E)E)) ([]E) \{\par
+	{\cf8\b return} collection(coll).Map(cb)\par
+\}\par
+\par
+{\cf8\b func} (iarr Collection) Reduce(cb ({\cf8\b func}(E,E)E)) E \{\par
+	o := iarr[{\cf4 0}]\par
+	m := {\cf8 len}(iarr)\par
+	{\cf8\b for} i := {\cf4 1}; i < m; i++ \{\par
+		o = cb( iarr[i], o)\par
+	\}\par
+	{\cf8\b return} o\par
+\}\par
+\par
+{\cf8\b func} Reduce(coll E, cb ({\cf8\b func}(E,E)E)) E \{\par
+	{\cf8\b return} collection(coll).Reduce(cb)\par
+\}\par
 \par
 {\cf8\b func} main() \{\par
 	fmt.Printf({\cf2 "Hello, world.\\n"})\par
@@ -395,7 +471,46 @@
 \par
 	preduced := parallelIntIntMapReduce( series({\cf4 1},{\cf4 100000000}), sqr, iadd, {\cf4 4})\par
 	fmt.Printf({\cf2 "Reduced %v\\n"}, preduced)\par
+\par
+	{\cf5\i //evex := ints(vex).([]E)\par
+}	{\cf5\i //vexout := Map(evex, inc.(func(E)E))\par
+}	evex := ints(vex).Map( {\cf8\b func}(x E) E \{\par
+		{\cf8\b return} (x.({\cf8 int})+{\cf4 1})\par
+	\})\par
+	fmt.Printf({\cf2 "Generic Map: %v\\n"}, evex)\par
+	evex2 := ints(vex).Map( {\cf8\b func}(x E) E \{\par
+		{\cf8\b return} ({\cf8 float32}(x.({\cf8 int}))+{\cf4 1.1})\par
+	\})\par
+	fmt.Printf({\cf2 "Generic Map: %v\\n"}, evex2)\par
+\par
+	svex := []{\cf8 string}\{{\cf2 "a"},{\cf2 "b"},{\cf2 "c"}\}\par
+	sout := collection(svex).Map( {\cf8\b func}(x E) E \{\par
+		{\cf8\b return} (x.({\cf8 string}) + x.({\cf8 string}))\par
+	\})\par
 	\par
+	fmt.Printf({\cf2 "Generic Map w/ String: %v\\n"}, sout)\par
+\par
+	sout2 := collection(svex).Map( {\cf8\b func}(x E) E \{\par
+		{\cf8\b return} {\cf8 len}(x.({\cf8 string}))\par
+	\})\par
 	\par
+	fmt.Printf({\cf2 "Generic Map w/ String: %v\\n"}, sout2)\par
+\par
+\par
+	evex3 := collection(vex).Map( {\cf8\b func}(x E) E \{\par
+		{\cf8\b return} (x.({\cf8 int})+{\cf4 1})\par
+	\})\par
+	fmt.Printf({\cf2 "Generic Map: %v\\n"}, evex3)\par
+\par
+	slowMapRes := Map( vex, {\cf8\b func}(x E) E \{ \par
+		y := x.({\cf8 int})\par
+		{\cf8\b return} (y*y)\par
+	\})\par
+	fmt.Printf({\cf2 "Generic Map function: %v\\n"}, slowMapRes)\par
+\par
+	slowMapReduce := Reduce( slowMapRes, {\cf8\b func}(x E, o E) E \{\par
+		{\cf8\b return} x.({\cf8 int}) + o.({\cf8 int})\par
+	\})\par
+	fmt.Printf({\cf2 "Generic Reduce function: %v\\n"}, slowMapReduce)\par
 \}\par
 }
