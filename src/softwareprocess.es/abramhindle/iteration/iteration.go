@@ -3,6 +3,8 @@ package main
 import "fmt"
 import "os"
 import "bufio"
+import "strings"
+import "net/http"
 
 type Tree struct {
     Value int
@@ -93,6 +95,24 @@ func (si *EvenStringIterator) Value() string {
 
 func EvenIterator(s string) *EvenStringIterator {
 	return &EvenStringIterator{current: -1, s: []rune(s)}
+}
+
+
+func intIntMap( iarr []int, cb (func(int) int)) []int {
+	out := make( []int, len(iarr))
+	for i,v := range iarr {
+		out[i] = cb( v )
+	}
+	return out
+}
+
+// MACROS??? GENERICS???
+func strStrMap( iarr []string, cb (func(string) string)) []string {
+	out := make( []string, len(iarr))
+	for i,v := range iarr {
+		out[i] = cb( v )
+	}
+	return out
 }
 
 
@@ -205,4 +225,33 @@ func main() {
 	}
 
 
+	v2 := []int{1,2,3,4,5,6,7,8}
+	inc := func(x int) int { return 1 + x }
+	sqr := func(x int) int { return x * x }
+	// lack of generics
+	v3 := intIntMap(v2, inc)
+	fmt.Printf("inc v2: [%v] v3: [%v]\n",v2,v3)
+	// lack of generics
+	v3 = intIntMap(v2, sqr)
+	fmt.Printf("sqr v2: [%v] v3: [%v]\n",v2,v3)
+	
+
+	basename := func(path string) string {
+		sp := strings.Split(path,"/")
+		return(sp[len(sp) - 1])
+	}
+	vs := []string{"/home","/file", "/usr/local"}
+	vs2 := strStrMap( vs, basename )
+	fmt.Printf("basename vs: [%v] vs2: [%v]\n",vs,vs2)
+
+	urls := []string{"http://cbc.ca", "http://gc.ca", "http://alberta.ca"}	
+	status := func( uri string ) string {
+		resp, _ := http.Get(uri)		
+		return(resp.Status)
+	}
+
+	statuses := strStrMap(urls, status);
+	fmt.Printf("statuses: %v\n", statuses)
+	
 }
+
